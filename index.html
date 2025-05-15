@@ -20,21 +20,26 @@
     <p><b>Tên người nhận:</b> Ngô Trọng Nhân</p>
   </div>
 
-  <script src="menu_data.js"></script>
   <script>
-    const foodList = document.getElementById("food-list");
-    const totalEl = document.getElementById("total");
-    let total = 0;
+  fetch("menu_data.json")
+    .then(response => response.json())
+    .then(detectedFoods => {
+      const foodList = document.getElementById("food-list");
+      const totalEl = document.getElementById("total");
+      let total = 0;
 
-    // Hiển thị món ăn và tính tổng
-    detectedFoods.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
-      foodList.appendChild(li);
-      total += item.price;
+      detectedFoods.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+        foodList.appendChild(li);
+        total += item.price;
+      });
+
+      totalEl.textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
+    })
+    .catch(error => {
+      console.error("Không load được menu_data.json:", error);
     });
-
-    totalEl.textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
-  </script>
+</script>
 </body>
 </html>
