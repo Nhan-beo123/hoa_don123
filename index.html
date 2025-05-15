@@ -37,9 +37,9 @@
 
     // Tạo mã QR VNPAY chuyển khoản
     const bank = "OCB";
-    const stk = "123456789";
-    const ten = "Nguyen Van A";
-    const noiDung = "Thanh toan bua an";
+    const stk = "0364128587";
+    const ten = "Ngô Trọng Nhân";
+    const noiDung = "Thanh toán bữa ăn";
 
     const qrUrl = `https://img.vietqr.io/image/${bank}-${stk}-compact2.png?amount=${total}&addInfo=${encodeURIComponent(noiDung)}&accountName=${encodeURIComponent(ten)}`;
     document.getElementById("qr-vnpay").src = qrUrl;
