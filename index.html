@@ -30,9 +30,10 @@
           const li = document.createElement("li");
 
           // Tạo tên file ảnh và sticker dựa trên tên món
-          const filenameBase = item.name
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase().replace(/\s+/g, "_");
+          const imageName = item.name
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // xoá dấu
+            .replace(/đ/g, "d").replace(/Đ/g, "d")           // xử lý đ/Đ
+            .toLowerCase().replace(/\s+/g, "_") + ".jpg";
 
           // Sticker
           const sticker = document.createElement("img");
