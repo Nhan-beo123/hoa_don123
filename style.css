@@ -1,9 +1,10 @@
 body {
   font-family: Arial, sans-serif;
-  background: #fef9f4;
+  background: url("images/anh_nen.jpg") repeat;
   margin: 0;
   padding: 20px;
 }
+
 
 .container {
   max-width: 500px;
