@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hóa đơn món ăn</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🧾 Hóa đơn món ăn</h1>
+    <ul id="food-list"></ul>
+    <h2 id="total"></h2>
+
+    <h3>Mã QR chuyển khoản (VNPAY):</h3>
+    <img id="qr-vnpay" alt="QR VNPAY chuyển khoản" />
+
+    <p><b>Ngân hàng:</b> OCB</p>
+    <p><b>Số tài khoản:</b> 123456789</p>
+    <p><b>Tên người nhận:</b> Nguyen Van A</p>
+  </div>
+
+  <script src="menu-data.js"></script>
+  <script>
+    const foodList = document.getElementById("food-list");
+    const totalEl = document.getElementById("total");
+    let total = 0;
+
+    // Hiển thị món ăn và tính tổng
+    detectedFoods.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+      foodList.appendChild(li);
+      total += item.price;
+    });
+
+    totalEl.textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
+
+    // Tạo mã QR VNPAY chuyển khoản
+    const bank = "OCB";
+    const stk = "123456789";
+    const ten = "Nguyen Van A";
+    const noiDung = "Thanh toan bua an";
+
+    const qrUrl = `https://img.vietqr.io/image/${bank}-${stk}-compact2.png?amount=${total}&addInfo=${encodeURIComponent(noiDung)}&accountName=${encodeURIComponent(ten)}`;
+    document.getElementById("qr-vnpay").src = qrUrl;
+  </script>
+</body>
+</html>
