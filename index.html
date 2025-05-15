@@ -1,69 +1,48 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <title>Hóa đơn món ăn</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>🧾 Hóa đơn món ăn</h1>
-    <ul id="food-list"></ul>
-    <h2 id="total"></h2>
+<script>
+  fetch("menu_data.json")
+    .then(response => response.json())
+    .then(detectedFoods => {
+      const foodList = document.getElementById("food-list");
+      const totalEl = document.getElementById("total");
+      let total = 0;
 
-    <h3>Mã QR chuyển khoản (VNPAY):</h3>
-    <img class="qr-image" src="qr-nganhang.jpg" alt="QR chuyển khoản" />
-    <p><b>Ngân hàng:</b> OCB</p>
-    <p><b>Số tài khoản:</b> 0364128587</p>
-    <p><b>Tên người nhận:</b> Ngô Trọng Nhân</p>
-  </div>
+      detectedFoods.forEach(item => {
+        const li = document.createElement("li");
 
-  <script>
-    fetch("menu_data.json")
-      .then(response => response.json())
-      .then(detectedFoods => {
-        const foodList = document.getElementById("food-list");
-        const totalEl = document.getElementById("total");
-        let total = 0;
+        // Tạo base name cho ảnh/sticker từ tên món ăn
+        const filenameBase = item.name
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // xoá dấu
+          .replace(/đ/g, "d").replace(/Đ/g, "d")            // đ/Đ → d
+          .toLowerCase().replace(/\s+/g, "_");
 
-        detectedFoods.forEach(item => {
-          const li = document.createElement("li");
+        // Sticker
+        const sticker = document.createElement("img");
+        sticker.src = `stickers/${filenameBase}.png`;
+        sticker.alt = "icon";
+        sticker.classList.add("sticker-icon");
 
-          // Tạo tên file ảnh và sticker dựa trên tên món
-          const imageName = item.name
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // xoá dấu
-            .replace(/đ/g, "d").replace(/Đ/g, "d")           // xử lý đ/Đ
-            .toLowerCase().replace(/\s+/g, "_") + ".jpg";
+        // Ảnh món ăn
+        const img = document.createElement("img");
+        img.src = `images/${filenameBase}.jpg`;
+        img.alt = item.name;
+        img.classList.add("food-image");
 
-          // Sticker
-          const sticker = document.createElement("img");
-          sticker.src = `stickers/${filenameBase}.png`;
-          sticker.alt = "icon";
-          sticker.classList.add("sticker-icon");
+        // Tên + giá
+        const text = document.createElement("span");
+        text.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
 
-          // Ảnh món
-          const img = document.createElement("img");
-          img.src = `images/${filenameBase}.jpg`;
-          img.alt = item.name;
-          img.classList.add("food-image");
+        li.appendChild(sticker);
+        li.appendChild(img);
+        li.appendChild(text);
 
-          // Tên món + giá
-          const text = document.createElement("span");
-          text.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
-
-          li.appendChild(sticker);  // sticker trước
-          li.appendChild(img);      // ảnh món
-          li.appendChild(text);     // nội dung
-
-          foodList.appendChild(li);
-          total += item.price;
-        });
-
-        totalEl.textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
-      })
-      .catch(error => {
-        console.error("Không load được menu_data.json:", error);
+        foodList.appendChild(li);
+        total += item.price;
       });
-  </script>
-</body>
-</html>
+
+      totalEl.textContent = `Tổng cộng: ${total.toLocaleString()}đ`;
+    })
+    .catch(error => {
+      console.error("Không load được menu_data.json:", error);
+    });
+</script>
+
