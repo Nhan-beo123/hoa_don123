@@ -29,26 +29,32 @@
         detectedFoods.forEach(item => {
           const li = document.createElement("li");
 
-          // Tên file ảnh khớp với tên món ăn (bỏ dấu, viết thường)
-          const imageName = item.name
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // xóa dấu tiếng Việt
-            .toLowerCase().replace(/\s+/g, "_") + ".jpg";
+          // Tạo tên file ảnh và sticker dựa trên tên món
+          const filenameBase = item.name
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase().replace(/\s+/g, "_");
 
+          // Sticker
+          const sticker = document.createElement("img");
+          sticker.src = `stickers/${filenameBase}.png`;
+          sticker.alt = "icon";
+          sticker.classList.add("sticker-icon");
+
+          // Ảnh món
           const img = document.createElement("img");
-          img.src = `images/${imageName}`;
+          img.src = `images/${filenameBase}.jpg`;
           img.alt = item.name;
-          img.style.width = "80px";
-          img.style.height = "80px";
-          img.style.borderRadius = "8px";
-          img.style.marginRight = "12px";
+          img.classList.add("food-image");
 
+          // Tên món + giá
           const text = document.createElement("span");
           text.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
 
-          li.appendChild(img);
-          li.appendChild(text);
-          foodList.appendChild(li);
+          li.appendChild(sticker);  // sticker trước
+          li.appendChild(img);      // ảnh món
+          li.appendChild(text);     // nội dung
 
+          foodList.appendChild(li);
           total += item.price;
         });
 
