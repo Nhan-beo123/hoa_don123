@@ -28,8 +28,27 @@
 
         detectedFoods.forEach(item => {
           const li = document.createElement("li");
-          li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+
+          // Tên file ảnh khớp với tên món ăn (bỏ dấu, viết thường)
+          const imageName = item.name
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // xóa dấu tiếng Việt
+            .toLowerCase().replace(/\s+/g, "_") + ".jpg";
+
+          const img = document.createElement("img");
+          img.src = `images/${imageName}`;
+          img.alt = item.name;
+          img.style.width = "80px";
+          img.style.height = "80px";
+          img.style.borderRadius = "8px";
+          img.style.marginRight = "12px";
+
+          const text = document.createElement("span");
+          text.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+
+          li.appendChild(img);
+          li.appendChild(text);
           foodList.appendChild(li);
+
           total += item.price;
         });
 
@@ -41,4 +60,3 @@
   </script>
 </body>
 </html>
-
