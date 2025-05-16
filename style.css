@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #fff9fec;
+  background: #fff9ec; /* Màu nền ngoài cùng (màu kem nhạt) */
   margin: 0;
   padding: 20px;
 }
@@ -8,27 +8,30 @@ body {
 .container {
   max-width: 500px;
   margin: auto;
-  background: white;
+  background: white; /* Nền hóa đơn */
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 16px; /* Bo góc mượt hơn */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Bóng nhẹ để nổi bật */
+  border: 1px solid #f1e4d4; /* Viền mờ để tách biệt khỏi nền */
 }
 
 h1, h2, h3 {
   text-align: center;
   color: #2c3e50;
+  margin-bottom: 12px;
 }
 
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
   font-size: 16px;
 }
 
@@ -47,12 +50,14 @@ li {
   object-fit: cover;
   border-radius: 8px;
   margin-right: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* QR chuyển khoản */
 .qr-image {
   display: block;
   margin: 24px auto;
   width: 320px;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
